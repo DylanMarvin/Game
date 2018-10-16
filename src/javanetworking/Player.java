@@ -18,9 +18,9 @@ public class Player {
     private int playerID;
     private boolean keyDown[] = new boolean[4];
     
-    Player(){
-        speed=5;
-        if(JavaNetworking.isClient){
+    Player(int i){
+        speed = 5;
+        if(i == 0){
             xpos=200;
             ypos=400;
             playerID=0;
@@ -39,7 +39,7 @@ public class Player {
    
     static void CreatePlayers(){
         for(int i = 0;i<players.length;i++){
-            players[i] = new Player();
+            players[i] = new Player(i);
         }
     }
     
@@ -55,17 +55,25 @@ public class Player {
         }
     }
     
+    static Player GetPlayer(){
+        if(JavaNetworking.isClient){
+            return players[0];
+        }
+        else
+            return players[1];
+    }
     
     void draw(Graphics2D g,JavaNetworking obj){
         g.setColor(Color.red);
-        g.drawRect(xpos, ypos, 10, 10);
+        g.drawRect(xpos - 5, ypos - 5, 10, 10);
     }
-    
-    
+       
     void tick(){
         xpos+=xVel;
         ypos+=yVel;
     }
+    
+    
     void setVel(String dir){
         
         if(dir.equals("UP")){
@@ -124,7 +132,7 @@ public class Player {
         }
         if(keyDown[2] == false && keyDown[3] == true){
             xVel = speed;
-        }
-        
+        }       
     }
+    
 }

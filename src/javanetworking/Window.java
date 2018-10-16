@@ -14,6 +14,7 @@ public class Window {
     static int MIN_Y;
     static int MAX_Y;
 
+    static final double frameRate = 60.0;
     static boolean animateFirstTime = true;
     static int xsize = -1;
     static int ysize = -1;

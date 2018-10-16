@@ -82,7 +82,7 @@ public class JavaNetworking extends JFrame implements Runnable
 
             public void keyPressed(KeyEvent e)
             {                       
-                if (e.getKeyCode() == KeyEvent.VK_S)
+                if (e.getKeyCode() == KeyEvent.VK_Q)
                 {
                     if (!isConnecting)
                     {                    
@@ -190,16 +190,44 @@ public class JavaNetworking extends JFrame implements Runnable
                     }
                 }
                 
-                if (gameStarted || isConnecting)
+                if (gameStarted)
                 {
                     if(e.getKeyCode() == KeyEvent.VK_W){
-                        
+                        Player.GetPlayer().setVel("UP");
                     }
+                    else if(e.getKeyCode() == KeyEvent.VK_S){
+                        Player.GetPlayer().setVel("DOWN");
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_A){
+                        Player.GetPlayer().setVel("LEFT");
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_D){
+                        Player.GetPlayer().setVel("RIGHT");
+                    }
+                    
                 }                
                 
                 
                 
                 repaint();
+            }
+            public void keyReleased(KeyEvent e)
+            {  
+                if (gameStarted)
+                {
+                    if(e.getKeyCode() == KeyEvent.VK_W){
+                        Player.GetPlayer().resetVel("UP");
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_S){
+                        Player.GetPlayer().resetVel("DOWN");
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_A){
+                        Player.GetPlayer().resetVel("LEFT");
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_D){
+                        Player.GetPlayer().resetVel("RIGHT");
+                    }                    
+                }
             }
         });
         init();
@@ -307,7 +335,7 @@ public class JavaNetworking extends JFrame implements Runnable
         {
             animate();
             repaint();
-            double seconds = .1; // time that 1 frame takes.
+            double seconds = 1.0/Window.frameRate; // time that 1 frame takes.
             int miliseconds = (int) (1000.0 * seconds);
             try
             {
