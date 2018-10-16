@@ -12,19 +12,10 @@ import java.io.*;
 public class JavaNetworking extends JFrame implements Runnable
 {
     public static Image image;
-
     public static Graphics2D g;
-
-    
     final int portNumber = 5657;
-    
     public static boolean gameStarted = false;
-    public static boolean myTurn;
-    public static int serverValue = 0;
-    public static int clientValue = 0;
-    
     String host = new String();
- 
     public static boolean isConnecting = false;
     public static boolean isClient;
     Thread relaxer;
@@ -36,7 +27,7 @@ public class JavaNetworking extends JFrame implements Runnable
         frame.setSize(Window.WINDOW_WIDTH, Window.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setTitle("Network");
+        frame.setTitle("Game v0.01");
         frame.setResizable(false);
     }    
     
@@ -90,40 +81,8 @@ public class JavaNetworking extends JFrame implements Runnable
         {
 
             public void keyPressed(KeyEvent e)
-            {
-//add or modify.
-                if (myTurn && gameStarted && e.getKeyCode() == KeyEvent.VK_1)
-                {
-				if (isClient)
-                                {
-                                    System.out.println("sending from client");
-                                    clientValue++;
-                                    ClientHandler.sendPieceMove(clientValue);
-                                }
-				else
-                                {
-                                    System.out.println("sending from server");
-                                    serverValue++;
-                                    ServerHandler.sendPieceMove(serverValue);
-                                }			                    
-                }  
-                else if (myTurn && gameStarted && e.getKeyCode() == KeyEvent.VK_2)
-                {
-			if (isClient)
-                                {
-                                    System.out.println("sending from client");
-                                    clientValue+=2;
-					ClientHandler.sendPieceMove(clientValue);
-                                }
-				else
-                                {
-                                    System.out.println("sending from server");
-                                    serverValue+=2;
-					ServerHandler.sendPieceMove(serverValue);
-                                }	
-			                    
-                }                        
-                else if (e.getKeyCode() == KeyEvent.VK_S)
+            {                       
+                if (e.getKeyCode() == KeyEvent.VK_S)
                 {
                     if (!isConnecting)
                     {                    
@@ -136,8 +95,8 @@ public class JavaNetworking extends JFrame implements Runnable
                             if (ServerHandler.connected)
                             {
                                 isClient = false;
-                                myTurn = false;
                                 gameStarted = true;
+                                Player.CreatePlayers();
                                 isConnecting = false;
                             }                        
                         }
@@ -163,8 +122,8 @@ public class JavaNetworking extends JFrame implements Runnable
                                 if (ClientHandler.connected)
                                 {
                                     isClient = true;
-                                    myTurn = true;
                                     gameStarted = true;
+                                    Player.CreatePlayers();
                                     isConnecting = false;
                                 }
                             }
@@ -233,22 +192,8 @@ public class JavaNetworking extends JFrame implements Runnable
                 
                 if (gameStarted || isConnecting)
                 {
-                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !isConnecting)
-                    {
-                        if (gameStarted)
-
-                            if (isClient)
-                            {
-                                ClientHandler.sendDisconnect();
-                                ClientHandler.disconnect();
-                            }
-                            else
-                            {
-                                ServerHandler.sendDisconnect();
-                                ServerHandler.disconnect();
-                            }
-                        gameStarted = false;
-                        reset();
+                    if(e.getKeyCode() == KeyEvent.VK_W){
+                        
                     }
                 }                
                 
@@ -300,6 +245,7 @@ public class JavaNetworking extends JFrame implements Runnable
         g.fillPolygon(x, y, 4);
         
         
+        
 //add or modify.   
         if (!gameStarted)
         {
@@ -319,20 +265,6 @@ public class JavaNetworking extends JFrame implements Runnable
             g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
             g.setColor(Color.black);
             g.drawString("The Server",100,150);
-        }            
-
-
-        {
-            g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
-            g.setColor(Color.black);
-            g.drawString("Client value " + clientValue,100,200);
-        }
-
-        {
-            g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
-            g.setColor(Color.black);
-            g.drawString("Server value " + serverValue,100,300);
-            
         }
         
             try
@@ -346,7 +278,11 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 e.printStackTrace();
             }
-                    
+            
+            
+        if(gameStarted){
+            Player.Draw(g, this);
+        }
         // put all paint commands above this line
         gOld.drawImage(image, 0, 0, null);
     }
@@ -388,7 +324,6 @@ public class JavaNetworking extends JFrame implements Runnable
      */
     public static void reset()
     {
-
     }
 
     /**
@@ -408,6 +343,10 @@ public class JavaNetworking extends JFrame implements Runnable
 
             reset();
         }
+        if(gameStarted){
+            Player.Tick();
+        }
+        
     }
 
     // //////////////////////////////////////////////////////////////////////////
