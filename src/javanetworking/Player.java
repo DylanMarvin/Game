@@ -10,6 +10,8 @@ public class Player {
     private static Player players[] = new Player[2];
     private int xpos;
     private int ypos;
+    private int mouseX;
+    private int mouseY;
     private int speed;
     private int health;
     private double angle;
@@ -17,6 +19,7 @@ public class Player {
     private int yVel;
     private int playerID;
     private boolean keyDown[] = new boolean[4];
+    
     
     Player(int i){
         speed = 5;
@@ -63,14 +66,19 @@ public class Player {
         else
             return players[1];
     }
-    static void setOpponentPosition(int xpos,int ypos){
+    static void setOpponentPosition(int xpos,int ypos,int mouseX,int mouseY){
         if(JavaNetworking.isClient){
             players[1].xpos = xpos;
             players[1].ypos = ypos;
+            players[1].mouseX = mouseX;
+            players[1].mouseY = mouseY;
         }
         else if(JavaNetworking.isClient==false){
             players[0].xpos = xpos;
             players[0].ypos = ypos;
+            players[0].mouseX = mouseX;
+            players[0].mouseY = mouseY;
+            
         }
         else
             System.out.println("Error setting opponent position");
@@ -81,6 +89,8 @@ public class Player {
         else if(playerID==1)
             g.setColor(Color.blue);
         
+        g.setColor(Color.green);
+        g.drawLine(xpos, ypos, mouseX, mouseY);
         
         g.drawRect(xpos - 5, ypos - 5, 10, 10);
     }
@@ -164,5 +174,16 @@ public class Player {
     int getY(){
         return ypos;
     }
+    int getMouseX(){
+        return mouseX;
+    }
+    int getMouseY(){
+        return mouseY;
+    }
+    void setMousePos(int _mouseX,int _mouseY){
+        mouseX = _mouseX;
+        mouseY = _mouseY;
+    }
+    
     
 }

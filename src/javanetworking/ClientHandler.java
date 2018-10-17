@@ -40,7 +40,7 @@ public class ClientHandler
 //		serverOut = new PrintWriter(server.getOutputStream(), true);
 //		serverIn = new BufferedReader(new InputStreamReader(server.getInputStream()));
 		connected = true;
-		recievePieceMove();
+		recieveInfo();
 	}
 
 	public static void disconnect()
@@ -68,7 +68,7 @@ public class ClientHandler
     {
 		if (connected)
 		{
-			out.println(Player.GetPlayer().getX() + ":" + Player.GetPlayer().getY());
+			out.println(Player.GetPlayer().getX() + ":" + Player.GetPlayer().getY() + ":" + Player.GetPlayer().getMouseX() + ":" + Player.GetPlayer().getMouseY());
                         out.flush(); 
 		}        
     }
@@ -82,7 +82,7 @@ public class ClientHandler
 	}
 
 
-	private static void recievePieceMove()
+	private static void recieveInfo()
 	{
 		new Thread(new Runnable() {
 
@@ -102,11 +102,12 @@ public class ClientHandler
 								disconnect();
 								return;
 							}
-//add or modify.
-							// row:col:initrow:initcol
+                                                        
 							int serverXpos = Integer.parseInt(inputLine.split(":")[0]);
 							int serverYpos = Integer.parseInt(inputLine.split(":")[1]);
-                                                        Player.setOpponentPosition(serverXpos, serverYpos);
+                                                        int serverMouseX = Integer.parseInt(inputLine.split(":")[2]);
+                                                        int serverMouseY = Integer.parseInt(inputLine.split(":")[3]);
+                                                        Player.setOpponentPosition(serverXpos, serverYpos,serverMouseX,serverMouseY);
 						}
 						catch (NumberFormatException e)
 						{

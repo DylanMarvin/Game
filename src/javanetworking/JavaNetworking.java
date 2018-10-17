@@ -73,6 +73,10 @@ public class JavaNetworking extends JFrame implements Runnable
         {
             public void mouseMoved(MouseEvent e)
             {
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                if(gameStarted)
+                    Player.GetPlayer().setMousePos(mouseX, mouseY);
                 repaint();
             }
         });
