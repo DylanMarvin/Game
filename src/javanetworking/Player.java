@@ -12,6 +12,8 @@ public class Player {
     private int ypos;
     private int mouseX;
     private int mouseY;
+    private int endX;
+    private int endY;
     private int speed;
     private int health;
     private double angle;
@@ -24,15 +26,16 @@ public class Player {
     Player(int i){
         speed = 5;
         if(i == 0){
-            xpos=200;
-            ypos=400;
-            playerID=i;
+            xpos = 200;
+            ypos = 400;
+            playerID = i;
         }
         else{
-            xpos=500;
-            ypos=400;
-            playerID=i;
+            xpos = 500;
+            ypos = 400;
+            playerID = i;
         }
+        
         keyDown[0] = false;
         keyDown[1] = false;
         keyDown[2] = false;
@@ -84,20 +87,25 @@ public class Player {
             System.out.println("Error setting opponent position");
     }
     void draw(Graphics2D g,JavaNetworking obj){
+        g.setColor(Color.green);
+        g.drawLine(xpos, ypos, endX, endY);
+        
         if(playerID==0)
             g.setColor(Color.red);
         else if(playerID==1)
             g.setColor(Color.blue);
-        
-        g.setColor(Color.green);
-        g.drawLine(xpos, ypos, mouseX, mouseY);
-        
+      
         g.drawRect(xpos - 5, ypos - 5, 10, 10);
     }
        
     void tick(){
         xpos+=xVel;
         ypos+=yVel;
+        String endPoint = calcEndPoint();
+        endX = Integer.parseInt(endPoint.split(":")[0]);
+        endY = Integer.parseInt(endPoint.split(":")[1]);
+        
+        
         if(playerID==0){
             ClientHandler.sendInfo();
         }
@@ -168,6 +176,25 @@ public class Player {
             xVel = speed;
         }       
     }
+    
+    String calcEndPoint(){
+        boolean bounds = false;
+        int xDist = mouseX - xpos;
+        int yDist = mouseY - ypos;
+        int tempX = mouseX;
+        int tempY = mouseY;
+        String endPoint;
+        while(bounds == false){
+            tempX += xDist;
+            tempY += yDist;
+            if( tempX < -50 || tempY < -50 || tempY > Window.getHeight2()+50 || tempX > Window.getWidth2()+50){
+                bounds = true;
+            }
+        }
+        endPoint = tempX + ":" + tempY;
+        return endPoint;
+    }
+    
     int getX(){
         return xpos;
     }

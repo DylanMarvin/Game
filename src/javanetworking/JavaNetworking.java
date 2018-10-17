@@ -1,4 +1,3 @@
-//Big Meme
 package javanetworking;
 
 import javax.swing.*;
@@ -27,7 +26,8 @@ public class JavaNetworking extends JFrame implements Runnable
         frame.setSize(Window.WINDOW_WIDTH, Window.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setTitle("Game v0.01");
+        frame.setLocationRelativeTo(null);
+        frame.setTitle("Game v0.02");
         frame.setResizable(false);
     }    
     
@@ -271,7 +271,7 @@ public class JavaNetworking extends JFrame implements Runnable
         
         // far outer border
         g.setColor(Color.black);
-        g.fillRect(0, 0, Window.xsize, Window.ysize);
+        g.fillRect(0, 0, Window.xsize, Window.ysize);               
         // ----------------
 
         // background
@@ -313,8 +313,8 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 e.printStackTrace();
             }
-            
-            
+        g.drawLine(0,Window.getY(1),Window.getWidth2(),Window.getY(1));    
+             
         if(gameStarted){
             Player.Draw(g, this);
         }
