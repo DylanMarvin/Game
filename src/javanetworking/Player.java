@@ -95,7 +95,7 @@ public class Player {
         else if(playerID==1)
             g.setColor(Color.blue);
       
-        g.drawRect(xpos - 5, ypos - 5, 10, 10);
+        g.fillRect(xpos - 5, ypos - 5, 10, 10);
     }
        
     void tick(){

@@ -282,6 +282,7 @@ public class JavaNetworking extends JFrame implements Runnable
         
         
 //add or modify.   
+        Map.Draw(g, this);
         if (!gameStarted)
         {
             g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
@@ -315,6 +316,7 @@ public class JavaNetworking extends JFrame implements Runnable
             }
         g.drawLine(0,Window.getY(1),Window.getWidth2(),Window.getY(1));    
              
+        
         if(gameStarted){
             Player.Draw(g, this);
         }
