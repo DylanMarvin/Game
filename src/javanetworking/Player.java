@@ -23,12 +23,12 @@ public class Player {
         if(i == 0){
             xpos=200;
             ypos=400;
-            playerID=0;
+            playerID=i;
         }
         else{
             xpos=500;
             ypos=400;
-            playerID=1;
+            playerID=i;
         }
         keyDown[0] = false;
         keyDown[1] = false;
@@ -51,26 +51,50 @@ public class Player {
     
     static void Tick(){
         for(int i = 0;i<players.length;i++){
+            if(players[i]==null)
+                break;
             players[i].tick();
         }
     }
     
     static Player GetPlayer(){
-        if(JavaNetworking.isClient){
+        if(JavaNetworking.isClient)
             return players[0];
-        }
         else
             return players[1];
     }
-    
+    static void setOpponentPosition(int xpos,int ypos){
+        if(JavaNetworking.isClient){
+            players[1].xpos = xpos;
+            players[1].ypos = ypos;
+        }
+        else if(JavaNetworking.isClient==false){
+            players[0].xpos = xpos;
+            players[0].ypos = ypos;
+        }
+        else
+            System.out.println("Error setting opponent position");
+    }
     void draw(Graphics2D g,JavaNetworking obj){
-        g.setColor(Color.red);
+        if(playerID==0)
+            g.setColor(Color.red);
+        else if(playerID==1)
+            g.setColor(Color.blue);
+        
+        
         g.drawRect(xpos - 5, ypos - 5, 10, 10);
     }
        
     void tick(){
         xpos+=xVel;
         ypos+=yVel;
+        if(playerID==0){
+            ClientHandler.sendInfo();
+        }
+        else
+        {
+            ServerHandler.sendInfo();
+        }
     }
     
     
@@ -133,6 +157,12 @@ public class Player {
         if(keyDown[2] == false && keyDown[3] == true){
             xVel = speed;
         }       
+    }
+    int getX(){
+        return xpos;
+    }
+    int getY(){
+        return ypos;
     }
     
 }

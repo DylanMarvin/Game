@@ -60,12 +60,11 @@ public class ServerHandler
     
     
     
-    public static void sendPieceMove(int val)
+    public static void sendInfo()
     {
 		if (connected)
-		{
-//add or modify.                    
-			pw.println(val + ":" + -1);
+		{   
+			pw.println(Player.GetPlayer().getX() + ":" + Player.GetPlayer().getY());
                         pw.flush(); 
 		}            
     }
@@ -101,10 +100,9 @@ public class ServerHandler
                             }
                             // row:col:initrow:initcol
 //add or modify.                            
-                            int post0 = Integer.parseInt(inputLine.split(":")[0]);
-                            int post1 = Integer.parseInt(inputLine.split(":")[1]);
-//                            JavaNetworking.clientValue=post0;
-//                            JavaNetworking.myTurn = true;
+                            int clientXpos = Integer.parseInt(inputLine.split(":")[0]);
+                            int clientYpos = Integer.parseInt(inputLine.split(":")[1]);
+                            Player.setOpponentPosition(clientXpos, clientYpos);
                         }
                         catch (NumberFormatException e)
                         {

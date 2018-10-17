@@ -204,7 +204,6 @@ public class JavaNetworking extends JFrame implements Runnable
                     else if(e.getKeyCode() == KeyEvent.VK_D){
                         Player.GetPlayer().setVel("RIGHT");
                     }
-                    
                 }                
                 
                 

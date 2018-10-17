@@ -64,13 +64,11 @@ public class ClientHandler
 		JavaNetworking.gameStarted = false;
 		JavaNetworking.reset();
 	}
-    public static void sendPieceMove(int val)
+    public static void sendInfo()
     {
 		if (connected)
 		{
-//add or modify.                 
-//			out.println(-1 + ":" + val);
-			out.println(val + ":" + -1);
+			out.println(Player.GetPlayer().getX() + ":" + Player.GetPlayer().getY());
                         out.flush(); 
 		}        
     }
@@ -106,11 +104,9 @@ public class ClientHandler
 							}
 //add or modify.
 							// row:col:initrow:initcol
-							int post0 = Integer.parseInt(inputLine.split(":")[0]);
-							int post1 = Integer.parseInt(inputLine.split(":")[1]);
-                                                        
-                                                        //JavaNetworking.serverValue=post0;
-                                                        //JavaNetworking.myTurn = true;
+							int serverXpos = Integer.parseInt(inputLine.split(":")[0]);
+							int serverYpos = Integer.parseInt(inputLine.split(":")[1]);
+                                                        Player.setOpponentPosition(serverXpos, serverYpos);
 						}
 						catch (NumberFormatException e)
 						{
