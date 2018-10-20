@@ -39,7 +39,7 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 if (e.BUTTON1 == e.getButton())
                 {
-                    System.out.println(e.getX() + "       " + e.getY());
+                    //System.out.println(e.getX() + "       " + e.getY());
                 }
 
                 repaint();
@@ -87,7 +87,6 @@ public class JavaNetworking extends JFrame implements Runnable
 
         addKeyListener(new KeyAdapter()
         {
-
             public void keyPressed(KeyEvent e)
             {                       
                 if (e.getKeyCode() == KeyEvent.VK_Q)
@@ -95,7 +94,6 @@ public class JavaNetworking extends JFrame implements Runnable
                     if (!isConnecting)
                     {                    
                         try {     
-
                             isConnecting = true;
                             System.out.println("is connecting true");
                             ServerHandler.recieveConnect(portNumber);   //5657
@@ -112,19 +110,15 @@ public class JavaNetworking extends JFrame implements Runnable
                         {
                             System.out.println("Cannot host server: " + ex.getMessage());
                             isConnecting = false;
-                        }  
-                     
+                        }                       
                     }
-
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_C)
                 {
                     if (!isConnecting)
-                    {
-                    
+                    {                   
                             try
-                            {
-                   
+                            {                 
                                 isConnecting = true;
                                 ClientHandler.connect(host, portNumber);
                                 if (ClientHandler.connected)
@@ -140,8 +134,7 @@ public class JavaNetworking extends JFrame implements Runnable
                                 System.out.println("Cannot join server: " + ex.getMessage());
                                 isConnecting = false;
                             }                    
-                    }
-                    
+                    }                  
                 }                
                 else
                 {
@@ -193,7 +186,8 @@ public class JavaNetworking extends JFrame implements Runnable
                         }
                         else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
                         {
-                            host=host.substring(0, host.length()-1);
+                            if(host.length() > 0)
+                                host=host.substring(0, host.length()-1);
                         }
                     }
                 }
@@ -212,12 +206,11 @@ public class JavaNetworking extends JFrame implements Runnable
                     else if(e.getKeyCode() == KeyEvent.VK_D){
                         Player.GetPlayer().setVel("RIGHT");
                     }
-                }                
-                
-                
+                }                                                
                 
                 repaint();
             }
+            
             public void keyReleased(KeyEvent e)
             {  
                 if (gameStarted)
@@ -241,10 +234,6 @@ public class JavaNetworking extends JFrame implements Runnable
         start();
     }
 
-
-    /**
-     * Paints the graphic
-     */
     public void paint(Graphics gOld)
     {
         if (image == null || Window.xsize != getSize().width || Window.ysize != getSize().height)
@@ -263,10 +252,7 @@ public class JavaNetworking extends JFrame implements Runnable
         }
 
         int x[] = {Window.getX(0), Window.getX(Window.getWidth2()), Window.getX(Window.getWidth2()), Window.getX(0), Window.getX(0)};
-        int y[] = {Window.getY(0), Window.getY(0), Window.getY(Window.getHeight2()), Window.getY(Window.getHeight2()), Window.getY(0)};
-        // put all paint commands under this line
-
-        
+        int y[] = {Window.getY(0), Window.getY(0), Window.getY(Window.getHeight2()), Window.getY(Window.getHeight2()), Window.getY(0)};        
         
         
         // far outer border
@@ -274,15 +260,14 @@ public class JavaNetworking extends JFrame implements Runnable
         g.fillRect(0, 0, Window.xsize, Window.ysize);               
         // ----------------
 
-        // background
-      
+        // background      
         g.setColor(Color.white);
         g.fillPolygon(x, y, 4);
         
         
-        
-//add or modify.   
+           
         Map.Draw(g, this);
+        
         if (!gameStarted)
         {
             g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
@@ -314,28 +299,24 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 e.printStackTrace();
             }
+            
         g.drawLine(Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getY(0));    
              
-        
         if(gameStarted){
             Player.Draw(g, this);
         }
-        // put all paint commands above this line
+
         gOld.drawImage(image, 0, 0, null);
     }
 
-
     // //////////////////////////////////////////////////////////////////////////
-    public void init()
-    {
+    public void init() {
         requestFocus();
     }
-
     // //////////////////////////////////////////////////////////////////////////
-    public void destroy()
-    {
+    public void destroy() {
+         
     }
-
     // //////////////////////////////////////////////////////////////////////////
     // needed for implement runnable
     public void run()
@@ -356,16 +337,12 @@ public class JavaNetworking extends JFrame implements Runnable
         }
     }
 
-    /**
-     * Resets all variables and restarts game
-     */
-    public static void reset()
-    {
+
+    public static void reset() {
+            
     }
 
-    /**
-     * Updates state of game
-     */
+
     public void animate()
     {
 

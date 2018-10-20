@@ -9,11 +9,13 @@ import java.awt.Toolkit;
 
 
 public abstract class Map{
-    private static int rows = 30;
+    private static Image tile = Toolkit.getDefaultToolkit().getImage("Tile.png");
+    private static int width = 32;
+    private static int height = width;
+    private static int rows = Window.getWidth2()/width;
     private static int cols = rows;
     private static int board[][] = new int[rows][cols];
     private static boolean first = true;
-    private static Image tile = Toolkit.getDefaultToolkit().getImage("Tile.png");;
     
     
     static void Draw(Graphics2D g, JavaNetworking obj){        
@@ -27,13 +29,10 @@ public abstract class Map{
                 }
             }
         }
-
-               g.setColor(Color.red);
-               g.fillRect(-50,-50,Window.getWidth2()+100,Window.getHeight2()+100);
         
         for(int r = 0;r<rows;r++){
             for(int c = 0;c<cols;c++){
-                draw(g, Window.getX(r*32) + 16, Window.getY(c*32) + 16, board[r][c], obj);
+                draw(g, Window.getX(r*width) + width/2, Window.getY(c*height) + height/2, board[r][c], obj);
             }
         }
         
@@ -41,13 +40,11 @@ public abstract class Map{
     private static void draw(Graphics2D g,int xpos,int ypos,double rot,JavaNetworking obj) {
         g.translate(xpos,ypos);
         g.rotate(rot  * Math.PI/180.0);
-
         
         int width = tile.getWidth(obj);
         int height = tile.getHeight(obj);
 
         g.drawImage(tile,-width/2,-height/2,width,height,obj);
-
 
         g.rotate(-rot  * Math.PI/180.0);
         g.translate(-xpos,-ypos);

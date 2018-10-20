@@ -38,7 +38,6 @@ public class Window {
     }
     
     public static int getWidth2() {
-        //System.out.println(xsize);
         return (xsize - (XBORDER + WINDOW_BORDER));
     }
 
