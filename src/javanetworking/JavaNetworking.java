@@ -28,7 +28,7 @@ public class JavaNetworking extends JFrame implements Runnable
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setTitle("Game v0.02");
-        frame.setResizable(false);
+        frame.setResizable(true);
     }    
     
     public JavaNetworking()
@@ -39,7 +39,7 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 if (e.BUTTON1 == e.getButton())
                 {
-
+                    System.out.println(e.getX() + "       " + e.getY());
                 }
 
                 repaint();
@@ -78,7 +78,7 @@ public class JavaNetworking extends JFrame implements Runnable
             public void mouseMoved(MouseEvent e)
             {
                 int mouseX = e.getX();
-                int mouseY = e.getY();
+                int mouseY = e.getY();                
                 if(gameStarted)
                     Player.GetPlayer().setMousePos(mouseX, mouseY);
                 repaint();
@@ -262,8 +262,8 @@ public class JavaNetworking extends JFrame implements Runnable
             return;
         }
 
-        int x[] = {getX(0), getX(getWidth2()), getX(getWidth2()), getX(0), getX(0)};
-        int y[] = {getY(0), getY(0), getY(getHeight2()), getY(getHeight2()), getY(0)};
+        int x[] = {Window.getX(0), Window.getX(Window.getWidth2()), Window.getX(Window.getWidth2()), Window.getX(0), Window.getX(0)};
+        int y[] = {Window.getY(0), Window.getY(0), Window.getY(Window.getHeight2()), Window.getY(Window.getHeight2()), Window.getY(0)};
         // put all paint commands under this line
 
         
@@ -307,14 +307,14 @@ public class JavaNetworking extends JFrame implements Runnable
             {
                 g.setFont(new Font("Comic Sans", Font.ROMAN_BASELINE, 20));
                 g.setColor(Color.black);
-                g.drawString("Your IP address: " + InetAddress.getLocalHost().getHostAddress(), getX(10), getY(20));
-                g.drawString("Enter IP address: " + host, getX(10), getY(60));
+                g.drawString("Your IP address: " + InetAddress.getLocalHost().getHostAddress(), Window.getX(10), Window.getY(20));
+                g.drawString("Enter IP address: " + host, Window.getX(10), Window.getY(60));
             }
             catch (UnknownHostException e)
             {
                 e.printStackTrace();
             }
-        g.drawLine(0,Window.getY(1),Window.getWidth2(),Window.getY(1));    
+        g.drawLine(Window.getX(0),Window.getY(0),Window.getWidth2(),Window.getY(0));    
              
         
         if(gameStarted){
@@ -407,30 +407,6 @@ public class JavaNetworking extends JFrame implements Runnable
     }
     
 
-    // ///////////////////////////////////////////////////////////////////////
-    public static int getX(int x)
-    {
-        return (x + Window.XBORDER);
-    }
 
-    public static int getY(int y)
-    {
-        return (y + Window.YBORDER + Window.YTITLE);
-    }
-
-    public static int getYNormal(int y)
-    {
-        return (-y + Window.YBORDER + Window.YTITLE + getHeight2());
-    }
-
-    public static int getWidth2()
-    {
-        return (Window.xsize - getX(0) - Window.XBORDER);
-    }
-
-    public static int getHeight2()
-    {
-        return (Window.ysize - getY(0) - Window.YBORDER);
-    }
     
 }

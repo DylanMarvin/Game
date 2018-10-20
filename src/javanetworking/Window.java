@@ -4,10 +4,10 @@ package javanetworking;
 public class Window {
     static final int XBORDER = 0;
     static final int YBORDER = 0;
-    static final int YTITLE = 25;
-    static final int WINDOW_WIDTH = 960;
-    static final int WINDOW_HEIGHT = 985;
+    static final int YTITLE = 31;
     static final int WINDOW_BORDER = 8; 
+    static final int WINDOW_WIDTH = 2*(WINDOW_BORDER + XBORDER) + 960;
+    static final int WINDOW_HEIGHT = YTITLE + WINDOW_BORDER + 960;    
 
     static int MIN_X;
     static int MAX_X;
@@ -18,31 +18,32 @@ public class Window {
     static boolean animateFirstTime = true;
     static int xsize = -1;
     static int ysize = -1;
+
+
+/////////////////////////////////////////////////////////////////////////
+    public static int getX(int x) {
+        return (x + XBORDER + WINDOW_BORDER);
+    }
+
+    public static int getY(int y) {
+        return (y + YTITLE );
+//        return (y + YBORDER + YTITLE );
+        
+    }
+
+    public static int getYNormal(int y) {
+        return (-y + YTITLE + getHeight2());
+//        return (-y + YBORDER + YTITLE + getHeight2());
+        
+    }
     
-        // ///////////////////////////////////////////////////////////////////////
-    public static int getX(int x)
-    {
-        return (x + XBORDER);
+    public static int getWidth2() {
+        //System.out.println(xsize);
+        return (xsize - (XBORDER + WINDOW_BORDER));
     }
 
-    public static int getY(int y)
-    {
-        return (y + YBORDER + YTITLE);
-    }
-
-    public static int getYNormal(int y)
-    {
-        return (-y + YBORDER + YTITLE + getHeight2());
-    }
-
-    public static int getWidth2()
-    {
-        return (xsize - getX(0) - XBORDER);
-    }
-
-    public static int getHeight2()
-    {
-        return (ysize - getY(0) - YBORDER);
-    }
+    public static int getHeight2() {
+//        return (ysize - 2 * YBORDER - WINDOW_BORDER - YTITLE);
+        return (ysize - WINDOW_BORDER - YTITLE);
+    }    
 }
-
